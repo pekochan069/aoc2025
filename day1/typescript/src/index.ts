@@ -69,7 +69,7 @@ const program = Effect.gen(function* () {
   let position = 50;
   let at0 = 0;
 
-  const file = yield* readFile("test.txt");
+  const file = yield* readFile("input.txt");
 
   const inputList = file.split("\n");
 
