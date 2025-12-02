@@ -58,7 +58,7 @@ const parseInput = (input: string) => {
 
     const rotation: Rotation = {
       direction,
-      amount,
+      amount: anount % 100,
     };
 
     return rotation;
@@ -82,10 +82,9 @@ const program = Effect.gen(function* () {
       position += rotation.amount;
     }
 
-    while (position < 0) {
+    if (position < 0) {
       position = 100 + position;
-    }
-    while (position > 99) {
+    } else if (position > 99) {
       position = position - 100;
     }
 
