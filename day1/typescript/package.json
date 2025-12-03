@@ -1,10 +1,10 @@
 {
   "name": "typescript",
-  "module": "src/index.ts",
   "type": "module",
   "private": true,
   "scripts": {
-    "main": "bun run src/index.ts"
+    "part1": "bun run src/part1.ts",
+    "part2": "bun run src/part2.ts"
   },
   "devDependencies": {
     "@effect/eslint-plugin": "^0.3.2",

@@ -32,7 +32,7 @@ const parseInput = (input: string) => {
     if (input.length < 2) {
       return yield* Effect.fail(
         new ParseError({
-          message: "Input length should be greater than 2",
+          message: "Input length should be greater than 1",
         }),
       );
     }
@@ -58,7 +58,7 @@ const parseInput = (input: string) => {
 
     const rotation: Rotation = {
       direction,
-      amount: anount % 100,
+      amount,
     };
 
     return rotation;
@@ -69,26 +69,36 @@ const program = Effect.gen(function* () {
   let position = 50;
   let at0 = 0;
 
-  const file = yield* readFile("input.txt");
+  const file = yield* readFile("part2.txt");
 
   const inputList = file.split("\n");
 
   for (const input of inputList) {
     const rotation = yield* parseInput(input);
 
+    at0 += Math.floor(rotation.amount / 100);
+
+    const prev = position;
+
     if (rotation.direction === "L") {
-      position -= rotation.amount;
+      position -= rotation.amount % 100;
     } else {
-      position += rotation.amount;
+      position += rotation.amount % 100;
     }
 
     if (position < 0) {
       position = 100 + position;
+
+      if (prev !== 0) {
+        at0 += 1;
+      }
     } else if (position > 99) {
       position = position - 100;
-    }
 
-    if (position === 0) {
+      if (prev !== 0) {
+        at0 += 1;
+      }
+    } else if (position === 0) {
       at0 += 1;
     }
   }
@@ -98,6 +108,6 @@ const program = Effect.gen(function* () {
 
 BunRuntime.runMain(
   program.pipe(
-    Effect.provide(Layer.mergeAll(BunTerminal.layer, BunFileSystem.layer)),
+    Effect.provide(Layer.mergeAll(BunFileSystem.layer, BunTerminal.layer)),
   ),
 );
