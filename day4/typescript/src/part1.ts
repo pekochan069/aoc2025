@@ -1,15 +1,6 @@
 import { FileSystem, Terminal } from "@effect/platform";
 import { BunFileSystem, BunRuntime, BunTerminal } from "@effect/platform-bun";
-import {
-  Array,
-  Data,
-  Effect,
-  Layer,
-  Number,
-  Option,
-  pipe,
-  String,
-} from "effect";
+import { Array, Data, Effect, Layer, Number, pipe, String } from "effect";
 
 class ParseError extends Data.TaggedClass("ParseError")<{ message?: string }> {}
 
